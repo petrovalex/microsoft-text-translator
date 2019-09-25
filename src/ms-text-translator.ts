@@ -3,9 +3,10 @@ import * as uuidv4 from 'uuid/v4';
 import {
   GetLanguagesResponse,
   Credentials,
-  TextForTranslate,
+  Text,
   TranslateOptions,
   TranslateResponse,
+  TransliterateOptions,
 } from './ms-text-translator.types';
 
 const qs = require('qs');
@@ -13,10 +14,6 @@ const qs = require('qs');
 const BASE_URL = 'https://api.cognitive.microsofttranslator.com';
 
 export class MsTextTranslator {
-  //private expires_in: number | null = null;
-  //private expires_at = 0;
-  //private access_token = '';
-
   api: AxiosInstance;
 
   constructor(
@@ -53,7 +50,7 @@ export class MsTextTranslator {
     return response.data;
   }
 
-  async translate(data: TextForTranslate[], options: TranslateOptions) {
+  async translate(data: Text[], options: TranslateOptions) {
     const response = await this.api.post<TranslateResponse>('translate', data, {
       params: options,
       headers: {
@@ -61,6 +58,25 @@ export class MsTextTranslator {
       },
       paramsSerializer: function(params) {
         return qs.stringify(params, { arrayFormat: 'repeat' });
+      },
+    });
+    return response.data;
+  }
+
+  async transliterate(data: Text[], options: TransliterateOptions) {
+    const response = await this.api.post('transliterate', data, {
+      params: options,
+      headers: {
+        'X-ClientTraceId': uuidv4().toString(),
+      },
+    });
+    return response.data;
+  }
+
+  async detectLanguage(data: Text[]) {
+    const response = await this.api.post('detect', data, {
+      headers: {
+        'X-ClientTraceId': uuidv4().toString(),
       },
     });
     return response.data;

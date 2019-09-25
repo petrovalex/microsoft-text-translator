@@ -56,8 +56,17 @@ export type TranslateResponse = {
   };
 };
 
-export interface TextForTranslate {
-  Text: string;
+export type DetectLanguageResult = {
+  language: string;
+  score: number;
+  isTranslationSupported: boolean;
+  isTransliterationSupported: boolean;
+};
+
+export type DetectLanguageResponse = DetectLanguageResult & { alternatives: DetectLanguageResult[] };
+
+export interface Text {
+  text: string;
 }
 
 export enum ProfanityAction {
@@ -84,4 +93,10 @@ export interface TranslateOptions {
   fromScript?: string;
   toScript?: string;
   allowFallback?: boolean;
+}
+
+export interface TransliterateOptions {
+  language: string;
+  fromScript: string;
+  toScript: string;
 }

@@ -14,7 +14,7 @@ describe('MsTextTranslator', () => {
 
   describe('translate', () => {
     it('translates a single input', async () => {
-      const translation = await translator.translate([{ Text: 'Hello, what is your name?' }], {
+      const translation = await translator.translate([{ text: 'Hello, what is your name?' }], {
         from: 'en',
         to: 'zh-Hans',
       });
@@ -27,7 +27,7 @@ describe('MsTextTranslator', () => {
     });
 
     it('translates a single input with language auto-detection', async () => {
-      const translation = await translator.translate([{ Text: 'Hello, what is your name?' }], {
+      const translation = await translator.translate([{ text: 'Hello, what is your name?' }], {
         to: 'zh-Hans',
       });
 
@@ -40,7 +40,7 @@ describe('MsTextTranslator', () => {
     });
 
     it('translates with transliteration', async () => {
-      const translation = await translator.translate([{ Text: 'Hello, what is your name?' }], {
+      const translation = await translator.translate([{ text: 'Hello, what is your name?' }], {
         to: 'zh-Hans',
         toScript: 'Latn',
       });
@@ -61,7 +61,7 @@ describe('MsTextTranslator', () => {
 
     it('translates multiple pieces of text', async () => {
       const translation = await translator.translate(
-        [{ Text: 'Hello, what is your name?' }, { Text: 'I am fine, thank you.' }],
+        [{ text: 'Hello, what is your name?' }, { text: 'I am fine, thank you.' }],
         {
           from: 'en',
           to: 'zh-Hans',
@@ -79,7 +79,7 @@ describe('MsTextTranslator', () => {
     });
 
     it('translates to multiple languages', async () => {
-      const translation = await translator.translate([{ Text: 'Hello, what is your name?' }], {
+      const translation = await translator.translate([{ text: 'Hello, what is your name?' }], {
         from: 'en',
         to: ['zh-Hans', 'de'],
       });
@@ -92,7 +92,7 @@ describe('MsTextTranslator', () => {
     });
 
     it.skip('handles profanity', async () => {
-      const translation = await translator.translate([{ Text: 'This is a freaking good idea.' }], {
+      const translation = await translator.translate([{ text: 'This is a freaking good idea.' }], {
         from: 'en',
         to: 'de',
         profanityAction: ProfanityAction.Marked,
@@ -109,7 +109,7 @@ describe('MsTextTranslator', () => {
       const translation = await translator.translate(
         [
           {
-            Text:
+            text:
               'The answer lies in machine translation. ' +
               'The best machine translation technology cannot always provide translations tailored to a site or users like a human. ' +
               'Simply copy and paste a code snippet anywhere.',
@@ -128,13 +128,52 @@ describe('MsTextTranslator', () => {
             {
               text:
                 'La réponse réside dans la traduction automatique. La meilleure technologie de traduction automatique ne peut pas toujours fournir des traductions adaptées à un ' +
-                'site ou à des utilisateurs comme un humain. Il suffit de copier et coller un extrait de code n\'importe où.',
+                "site ou à des utilisateurs comme un humain. Il suffit de copier et coller un extrait de code n'importe où.",
               to: 'fr',
               sentLen: { srcSentLen: [40, 117, 46], transSentLen: [50, 154, 62] },
             },
           ],
         },
       ]);
+    });
+
+    describe('transliterate', () => {
+      it('transliterates text', async () => {
+        const transliteration = await translator.transliterate(
+          [
+            {
+              text: 'こんにちは',
+            },
+          ],
+          {
+            language: 'ja',
+            fromScript: 'jpan',
+            toScript: 'latn',
+          }
+        );
+
+        expect(transliteration).toEqual([{ text: "Kon'nichiwa", script: 'latn' }]);
+      });
+    });
+
+    describe('detect', () => {
+      it('detects language', async () => {
+        const detect = await translator.detectLanguage([
+          { text: 'Ich würde wirklich gern Ihr Auto um den Block fahren ein paar Mal.' },
+        ]);
+        expect(detect).toEqual([
+          {
+            alternatives: [
+              { isTranslationSupported: true, isTransliterationSupported: false, language: 'nl', score: 0.92 },
+              { isTranslationSupported: true, isTransliterationSupported: false, language: 'sk', score: 0.77 },
+            ],
+            isTranslationSupported: true,
+            isTransliterationSupported: false,
+            language: 'de',
+            score: 1,
+          },
+        ]);
+      });
     });
   });
 });

@@ -192,5 +192,61 @@ describe('MsTextTranslator', () => {
         ]);
       });
     });
+
+    describe('dictinary lookup', () => {
+      it('provides alternative translation for the word', async () => {
+        const lookup = await translator.lookupDictionary([{ text: 'rahaa' }], { from: 'fi', to: 'en' });
+
+        expect(lookup).toEqual([
+          {
+            normalizedSource: 'rahaa',
+            displaySource: 'rahaa',
+            translations: [
+              {
+                normalizedTarget: 'money',
+                displayTarget: 'money',
+                posTag: 'NOUN',
+                confidence: 0.6793,
+                prefixWord: '',
+                backTranslations: [
+                  { normalizedText: 'rahaa', displayText: 'rahaa', numExamples: 15, frequencyCount: 23016 },
+                  { normalizedText: 'rahat', displayText: 'rahat', numExamples: 15, frequencyCount: 2028 },
+                  { normalizedText: 'raha', displayText: 'raha', numExamples: 15, frequencyCount: 1984 },
+                  { normalizedText: 'rahan', displayText: 'rahan', numExamples: 15, frequencyCount: 1283 },
+                  { normalizedText: 'rahoista', displayText: 'rahoista', numExamples: 5, frequencyCount: 173 },
+                  { normalizedText: 'rahoja', displayText: 'rahoja', numExamples: 5, frequencyCount: 168 },
+                  { normalizedText: 'rahasta', displayText: 'rahasta', numExamples: 5, frequencyCount: 167 },
+                ],
+              },
+              {
+                normalizedTarget: 'cash',
+                displayTarget: 'cash',
+                posTag: 'NOUN',
+                confidence: 0.1783,
+                prefixWord: '',
+                backTranslations: [
+                  { normalizedText: 'käteistä', displayText: 'käteistä', numExamples: 15, frequencyCount: 2432 },
+                  { normalizedText: 'rahaa', displayText: 'rahaa', numExamples: 15, frequencyCount: 1145 },
+                  { normalizedText: 'rahat', displayText: 'rahat', numExamples: 15, frequencyCount: 215 },
+                  { normalizedText: 'kassa', displayText: 'kassa', numExamples: 15, frequencyCount: 128 },
+                  { normalizedText: 'rahana', displayText: 'rahana', numExamples: 5, frequencyCount: 103 },
+                  { normalizedText: 'rahavirtaa', displayText: 'rahavirtaa', numExamples: 5, frequencyCount: 36 },
+                ],
+              },
+              {
+                normalizedTarget: 'spend money',
+                displayTarget: 'spend money',
+                posTag: 'VERB',
+                confidence: 0.1423,
+                prefixWord: '',
+                backTranslations: [
+                  { normalizedText: 'rahaa', displayText: 'rahaa', numExamples: 15, frequencyCount: 133 },
+                ],
+              },
+            ],
+          },
+        ]);
+      });
+    });
   });
 });

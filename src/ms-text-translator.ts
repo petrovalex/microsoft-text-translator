@@ -9,6 +9,10 @@ import {
   TransliterateOptions,
   BreakSentenceOptions,
   DetectLanguageResponse,
+  DictinaryLookupOptions,
+  DictionaryLookupResponse,
+  BreakSentenceResponse,
+  TransliterateResponse,
 } from './ms-text-translator.types';
 
 const qs = require('qs');
@@ -66,7 +70,7 @@ export class MsTextTranslator {
   }
 
   async transliterate(data: Text[], options: TransliterateOptions) {
-    const response = await this.api.post('transliterate', data, {
+    const response = await this.api.post<TransliterateResponse>('transliterate', data, {
       params: options,
       headers: {
         'X-ClientTraceId': uuidv4().toString(),
@@ -85,7 +89,17 @@ export class MsTextTranslator {
   }
 
   async breakSentence(data: Text[], options: BreakSentenceOptions = {}) {
-    const response = await this.api.post('breaksentence', data, {
+    const response = await this.api.post<BreakSentenceResponse>('breaksentence', data, {
+      params: options,
+      headers: {
+        'X-ClientTraceId': uuidv4().toString(),
+      },
+    });
+    return response.data;
+  }
+
+  async lookupDictionary(data: Text[], options: DictinaryLookupOptions) {
+    const response = await this.api.post<DictionaryLookupResponse>('dictionary/lookup', data, {
       params: options,
       headers: {
         'X-ClientTraceId': uuidv4().toString(),

@@ -54,7 +54,7 @@ export type TranslateResponse = {
   sourceText?: {
     text: string;
   };
-};
+}[];
 
 type DetectLanguageResult = {
   language: string;
@@ -63,12 +63,38 @@ type DetectLanguageResult = {
   isTransliterationSupported: boolean;
 };
 
-export type DetectLanguageResponse = DetectLanguageResult & { alternatives: DetectLanguageResult[] };
+export type DetectLanguageResponse = (DetectLanguageResult & { alternatives: DetectLanguageResult[] })[];
 
 export type TransliterateResponse = {
   text: string;
   script: string;
 }[];
+
+export type BreakSentenceResponse = {
+  sentenceLengths: number[];
+  detectedLanguage?: {
+    language: string;
+    score: number;
+  }
+}[]
+
+export type DictionaryLookupResponse = {
+  normalizedSource: string;
+  displaySource: string;
+  translations: {
+    normalizedTarget: string;
+    displayTarget: string;
+    posTag: string;
+    confidence: number;
+    prefixWord: string;
+    backTranslations: {
+      normalizedText: string;
+      displayText: string;
+      numExamples: string;
+      frequencyCount: number;
+    }[]
+  }[]
+}[]
 
 export interface Text {
   text: string;
@@ -109,4 +135,9 @@ export interface TransliterateOptions {
 export interface BreakSentenceOptions {
   language?: string;
   script?: string;
+}
+
+export interface DictinaryLookupOptions {
+  from: string;
+  to: string;
 }

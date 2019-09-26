@@ -13,6 +13,9 @@ import {
   DictionaryLookupResponse,
   BreakSentenceResponse,
   TransliterateResponse,
+  DictinaryExampleData,
+  DictionaryExampleOptions,
+  DictinaryExamplesResponse,
 } from './ms-text-translator.types';
 
 const qs = require('qs');
@@ -20,7 +23,7 @@ const qs = require('qs');
 const BASE_URL = 'https://api.cognitive.microsofttranslator.com';
 
 export class MsTextTranslator {
-  api: AxiosInstance;
+  private api: AxiosInstance;
 
   constructor(
     private readonly credentials: Credentials //private readonly autoRefresh = true
@@ -100,6 +103,16 @@ export class MsTextTranslator {
 
   async lookupDictionary(data: Text[], options: DictinaryLookupOptions) {
     const response = await this.api.post<DictionaryLookupResponse>('dictionary/lookup', data, {
+      params: options,
+      headers: {
+        'X-ClientTraceId': uuidv4().toString(),
+      },
+    });
+    return response.data;
+  }
+
+  async dictionaryExamples(data: DictinaryExampleData[], options: DictionaryExampleOptions) {
+    const response = await this.api.post<DictinaryExamplesResponse>('dictionary/examples', data, {
       params: options,
       headers: {
         'X-ClientTraceId': uuidv4().toString(),

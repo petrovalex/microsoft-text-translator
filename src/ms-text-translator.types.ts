@@ -75,8 +75,8 @@ export type BreakSentenceResponse = {
   detectedLanguage?: {
     language: string;
     score: number;
-  }
-}[]
+  };
+}[];
 
 export type DictionaryLookupResponse = {
   normalizedSource: string;
@@ -92,12 +92,30 @@ export type DictionaryLookupResponse = {
       displayText: string;
       numExamples: string;
       frequencyCount: number;
-    }[]
-  }[]
-}[]
+    }[];
+  }[];
+}[];
+
+export type DictinaryExamplesResponse = {
+  normalizedSource: string;
+  normalizedTarget: string;
+  examples: {
+    sourcePrefix: string;
+    sourceTerm: string;
+    sourceSuffix: string;
+    targetPrefix: string;
+    targetTerm: string;
+    targetSuffix: string;
+  }[];
+}[];
 
 export interface Text {
   text: string;
+}
+
+export interface DictinaryExampleData {
+  text: string;
+  translation: string;
 }
 
 export enum ProfanityAction {
@@ -138,6 +156,11 @@ export interface BreakSentenceOptions {
 }
 
 export interface DictinaryLookupOptions {
+  from: string;
+  to: string;
+}
+
+export interface DictionaryExampleOptions {
   from: string;
   to: string;
 }

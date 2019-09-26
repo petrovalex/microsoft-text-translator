@@ -248,5 +248,20 @@ describe('MsTextTranslator', () => {
         ]);
       });
     });
+
+    describe('dictionary examples', () => {
+      it('should provide examples', async () => {
+        const examples = await translator.dictionaryExamples([{ text: 'fly', translation: 'volar' }], {
+          from: 'en',
+          to: 'es',
+        });
+
+        expect(examples[0]).toMatchObject({
+          normalizedSource: 'fly',
+          normalizedTarget: 'volar',
+        });
+        expect(examples[0].examples.length).toBeGreaterThan(0);
+      });
+    });
   });
 });

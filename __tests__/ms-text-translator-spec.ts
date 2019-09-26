@@ -175,5 +175,22 @@ describe('MsTextTranslator', () => {
         ]);
       });
     });
+
+    describe('break sentence', () => {
+      it('breaks sentence', async () => {
+        const breaksentence = await translator.breakSentence([
+          { text: 'How are you? I am fine. What did you do today?' },
+        ]);
+        expect(breaksentence).toEqual([
+          {
+            sentLen: [13, 11, 22],
+            detectedLanguage: {
+              language: 'en',
+              score: 1,
+            },
+          },
+        ]);
+      });
+    });
   });
 });

@@ -7,6 +7,8 @@ import {
   TranslateOptions,
   TranslateResponse,
   TransliterateOptions,
+  BreakSentenceOptions,
+  DetectLanguageResponse,
 } from './ms-text-translator.types';
 
 const qs = require('qs');
@@ -74,7 +76,17 @@ export class MsTextTranslator {
   }
 
   async detectLanguage(data: Text[]) {
-    const response = await this.api.post('detect', data, {
+    const response = await this.api.post<DetectLanguageResponse>('detect', data, {
+      headers: {
+        'X-ClientTraceId': uuidv4().toString(),
+      },
+    });
+    return response.data;
+  }
+
+  async breakSentence(data: Text[], options: BreakSentenceOptions = {}) {
+    const response = await this.api.post('breaksentence', data, {
+      params: options,
       headers: {
         'X-ClientTraceId': uuidv4().toString(),
       },

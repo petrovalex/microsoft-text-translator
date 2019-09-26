@@ -56,7 +56,7 @@ export type TranslateResponse = {
   };
 };
 
-export type DetectLanguageResult = {
+type DetectLanguageResult = {
   language: string;
   score: number;
   isTranslationSupported: boolean;
@@ -64,6 +64,11 @@ export type DetectLanguageResult = {
 };
 
 export type DetectLanguageResponse = DetectLanguageResult & { alternatives: DetectLanguageResult[] };
+
+export type TransliterateResponse = {
+  text: string;
+  script: string;
+}[];
 
 export interface Text {
   text: string;
@@ -99,4 +104,9 @@ export interface TransliterateOptions {
   language: string;
   fromScript: string;
   toScript: string;
+}
+
+export interface BreakSentenceOptions {
+  language?: string;
+  script?: string;
 }

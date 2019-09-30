@@ -25,9 +25,7 @@ const BASE_URL = 'https://api.cognitive.microsofttranslator.com';
 export class MsTextTranslator {
   private api: AxiosInstance;
 
-  constructor(
-    private readonly credentials: Credentials //private readonly autoRefresh = true
-  ) {
+  constructor(private readonly credentials: Credentials) {
     this.api = axios.create({
       baseURL: BASE_URL,
       params: {
@@ -81,7 +79,7 @@ export class MsTextTranslator {
     return this.makeRequest<DictinaryExamplesResponse>('dictionary/examples', data, options);
   }
 
-  private async makeRequest<TResponse>(op: string, data: any, params: Object = {}, request = this.api.post) {
+  private async makeRequest<TResponse>(op: string, data: any, params: object = {}, request = this.api.post) {
     const response = await request<TResponse>(op, data, {
       params,
       headers: this.makeHeaders(),

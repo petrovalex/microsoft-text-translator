@@ -85,8 +85,8 @@ export class MsTextTranslator {
     const response = await request<TResponse>(op, data, {
       params,
       headers: this.makeHeaders(),
-      paramsSerializer: function(params) {
-        return qs.stringify(params, { arrayFormat: 'repeat' });
+      paramsSerializer: function(p) {
+        return qs.stringify(p, { arrayFormat: 'repeat' });
       },
     });
     return response.data;

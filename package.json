@@ -1,13 +1,12 @@
 {
-  "name": "microsoft-text-translation-v-3",
-  "version": "0.0.0",
+  "name": "microsoft-text-translation",
+  "version": "0.0.1",
   "description": "microsoft-text-translation-v-3",
   "license": "MIT",
   "repository": "",
   "author": {
-    "name": "",
-    "email": "",
-    "url": ""
+    "name": "Aleksandr Petrov",
+    "email": "petrov.alexander1@gmail.com"
   },
   "keywords": [
     ""

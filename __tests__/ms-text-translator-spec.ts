@@ -2,7 +2,11 @@ import { MsTextTranslator } from '../src/ms-text-translator';
 import { ProfanityAction } from '../src/ms-text-translator.types';
 
 const subscriptionKey = '';
-const translator = new MsTextTranslator({ subscriptionKey });
+const translator = new MsTextTranslator({
+  credentials: {
+    subscriptionKey,
+  },
+});
 
 describe('MsTextTranslator', () => {
   describe('languages', () => {

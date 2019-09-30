@@ -1,3 +1,7 @@
+export type ConfigOptions = {
+  credentials: Credentials;
+};
+
 export type Credentials = {
   subscriptionKey: string;
 };

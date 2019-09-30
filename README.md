@@ -22,7 +22,7 @@ An API key from portal.azure.com is needed to initialize client.
 ### Example usage - Translate
 
 ```js
-const translator = new MsTextTranslator({ subscriptionKey: '' });
+const translator = new MsTextTranslator({ credentials: { subscriptionKey: '' } });
 const translation = await translator.translate([{ text: 'Hello, what is your name?' }], {
   from: 'en',
   to: 'zh-Hans',
@@ -32,7 +32,7 @@ const translation = await translator.translate([{ text: 'Hello, what is your nam
 ### Example usage - Transliterate
 
 ```js
-const translator = new MsTextTranslator({ subscriptionKey: '' });
+const translator = new MsTextTranslator({ credentials: { subscriptionKey: '' } });
 const transliteration = await translator.transliterate([{
 	text: 'こんにちは',
 },], {
@@ -45,7 +45,7 @@ const transliteration = await translator.transliterate([{
 ### Example usage - Detect language
 
 ```js
-const translator = new MsTextTranslator({ subscriptionKey: '' });
+const translator = new MsTextTranslator({ credentials: { subscriptionKey: '' } });
 const detect = await translator.detectLanguage([
 	{ text: 'Ich würde wirklich gern Ihr Auto um den Block fahren ein paar Mal.' },
 ]);
@@ -54,7 +54,7 @@ const detect = await translator.detectLanguage([
 ### Example usage - Break sentence
 
 ```js
-const translator = new MsTextTranslator({ subscriptionKey: '' });
+const translator = new MsTextTranslator({ credentials: { subscriptionKey: '' } });
 const breaksentence = await translator.breakSentence([
 	{ text: 'How are you? I am fine. What did you do today?' },
 ]);
@@ -63,7 +63,7 @@ const breaksentence = await translator.breakSentence([
 ### Example usage - Dictionary Lookup
 
 ```js
-const translator = new MsTextTranslator({ subscriptionKey: '' });
+const translator = new MsTextTranslator({ credentials: { subscriptionKey: '' } });
 const lookup = await translator.lookupDictionary([{ text: 'rahaa' }], { from: 'fi', to: 'en' });
 ```
 
@@ -71,7 +71,7 @@ const lookup = await translator.lookupDictionary([{ text: 'rahaa' }], { from: 'f
 ### Example usage - Dictionary examples
 
 ```js
-const translator = new MsTextTranslator({ subscriptionKey: '' });
+const translator = new MsTextTranslator({ credentials: { subscriptionKey: '' } });
 const examples = await translator.dictionaryExamples([{ text: 'fly', translation: 'volar' }], {
   from: 'en',
   to: 'es',

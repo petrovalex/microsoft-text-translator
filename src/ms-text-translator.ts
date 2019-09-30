@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import * as uuidv4 from 'uuid/v4';
 import {
   GetLanguagesResponse,
-  Credentials,
+  ConfigOptions,
   Text,
   TranslateOptions,
   TranslateResponse,
@@ -25,14 +25,14 @@ const BASE_URL = 'https://api.cognitive.microsofttranslator.com';
 export class MsTextTranslator {
   private api: AxiosInstance;
 
-  constructor(private readonly credentials: Credentials) {
+  constructor(private readonly config: ConfigOptions) {
     this.api = axios.create({
       baseURL: BASE_URL,
       params: {
         'api-version': '3.0',
       },
       headers: {
-        'Ocp-Apim-Subscription-Key': this.credentials.subscriptionKey,
+        'Ocp-Apim-Subscription-Key': this.config.credentials.subscriptionKey,
         'Content-Type': 'application/json',
       },
     });

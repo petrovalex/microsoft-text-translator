@@ -22,8 +22,8 @@ An API key from portal.azure.com is needed to initialize client.
 ```js
 const translator = new MsTextTranslator({ subscriptionKey: '' });
 const translation = await translator.translate([{ text: 'Hello, what is your name?' }], {
-	from: 'en',
-    to: 'zh-Hans',
+  from: 'en',
+  to: 'zh-Hans',
 });
 ```
 
@@ -69,8 +69,9 @@ const lookup = await translator.lookupDictionary([{ text: 'rahaa' }], { from: 'f
 ### Example usage - Dictionary examples
 
 ```js
+const translator = new MsTextTranslator({ subscriptionKey: '' });
 const examples = await translator.dictionaryExamples([{ text: 'fly', translation: 'volar' }], {
-	from: 'en',
-    to: 'es',
+  from: 'en',
+  to: 'es',
 });
 ```

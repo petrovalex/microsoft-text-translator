@@ -52,72 +52,48 @@ export class MsTextTranslator {
     }
     const response = await this.api.get<Pick<GetLanguagesResponse, Scope>>('languages', {
       params,
-      headers: {
-        'X-ClientTraceId': uuidv4().toString(),
-      },
+      headers: this.makeHeaders(),
     });
     return response.data;
   }
 
-  async translate(data: Text[], options: TranslateOptions) {
-    const response = await this.api.post<TranslateResponse>('translate', data, {
-      params: options,
-      headers: {
-        'X-ClientTraceId': uuidv4().toString(),
-      },
+  translate(data: Text[], options: TranslateOptions) {
+    return this.makeRequest<TranslateResponse>('translate', data, options);
+  }
+
+  transliterate(data: Text[], options: TransliterateOptions) {
+    return this.makeRequest<TransliterateResponse>('transliterate', data, options);
+  }
+
+  detectLanguage(data: Text[]) {
+    return this.makeRequest<DetectLanguageResponse>('detect', data);
+  }
+
+  breakSentence(data: Text[], options: BreakSentenceOptions = {}) {
+    return this.makeRequest<BreakSentenceResponse>('breaksentence', data, options);
+  }
+
+  lookupDictionary(data: Text[], options: DictinaryLookupOptions) {
+    return this.makeRequest<DictionaryLookupResponse>('dictionary/lookup', data, options);
+  }
+
+  dictionaryExamples(data: DictinaryExampleData[], options: DictionaryExampleOptions) {
+    return this.makeRequest<DictinaryExamplesResponse>('dictionary/examples', data, options);
+  }
+
+  private async makeRequest<TResponse>(op: string, data: any, params: Object = {}, request = this.api.post) {
+    const response = await request<TResponse>(op, data, {
+      params,
+      headers: this.makeHeaders(),
       paramsSerializer: function(params) {
         return qs.stringify(params, { arrayFormat: 'repeat' });
       },
     });
     return response.data;
   }
-
-  async transliterate(data: Text[], options: TransliterateOptions) {
-    const response = await this.api.post<TransliterateResponse>('transliterate', data, {
-      params: options,
-      headers: {
-        'X-ClientTraceId': uuidv4().toString(),
-      },
-    });
-    return response.data;
-  }
-
-  async detectLanguage(data: Text[]) {
-    const response = await this.api.post<DetectLanguageResponse>('detect', data, {
-      headers: {
-        'X-ClientTraceId': uuidv4().toString(),
-      },
-    });
-    return response.data;
-  }
-
-  async breakSentence(data: Text[], options: BreakSentenceOptions = {}) {
-    const response = await this.api.post<BreakSentenceResponse>('breaksentence', data, {
-      params: options,
-      headers: {
-        'X-ClientTraceId': uuidv4().toString(),
-      },
-    });
-    return response.data;
-  }
-
-  async lookupDictionary(data: Text[], options: DictinaryLookupOptions) {
-    const response = await this.api.post<DictionaryLookupResponse>('dictionary/lookup', data, {
-      params: options,
-      headers: {
-        'X-ClientTraceId': uuidv4().toString(),
-      },
-    });
-    return response.data;
-  }
-
-  async dictionaryExamples(data: DictinaryExampleData[], options: DictionaryExampleOptions) {
-    const response = await this.api.post<DictinaryExamplesResponse>('dictionary/examples', data, {
-      params: options,
-      headers: {
-        'X-ClientTraceId': uuidv4().toString(),
-      },
-    });
-    return response.data;
+  private makeHeaders() {
+    return {
+      'X-ClientTraceId': uuidv4().toString(),
+    };
   }
 }

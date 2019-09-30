@@ -15,6 +15,8 @@
 
 ### Installation
 
+$ npm i microsoft-text-translation
+
 An API key from portal.azure.com is needed to initialize client.
 
 ### Example usage - Translate

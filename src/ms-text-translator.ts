@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import * as qs from 'qs';
 import * as uuidv4 from 'uuid/v4';
 import {
   GetLanguagesResponse,
@@ -17,8 +18,6 @@ import {
   DictionaryExampleOptions,
   DictinaryExamplesResponse,
 } from './ms-text-translator.types';
-
-const qs = require('qs');
 
 const BASE_URL = 'https://api.cognitive.microsofttranslator.com';
 
